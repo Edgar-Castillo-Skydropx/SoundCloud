@@ -1,13 +1,6 @@
-<% if notice %>
-  <p class="notice"><%= notice %></p>
-<% end %>
-<% if alert %>
-  <p class="alert"><%= alert %></p>
-<% end %>
-
 <script>
     function hideNotices() {
-    const notices = document.querySelectorAll('.notice, .alert');
+    const notices = document.querySelectorAll('.notice, .alert, .notice-aux');
     notices.forEach(function(notice) {
         setTimeout(function() {
         notice.style.display = 'none';

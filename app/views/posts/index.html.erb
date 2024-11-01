@@ -1,0 +1,26 @@
+<div class="w-full max-w-7xl mt-2 mx-auto flex mb-2">
+  <div>
+    <p class="text-3xl font-bold text-7xl text-indigo-400">Soundcloud</p>
+  </div>
+   <% if current_user %>
+    <%= link_to "Sign Out", destroy_user_session_path, class: "bg-purple-500 text-purple-100 p-2 rounded-lg w-32 text-center ml-auto",
+      data: { turbo_method: :delete } %>
+  <% end %>
+</div>
+
+<div class="w-full max-w-8xl h-px bg-gray-200 my-4 mx-auto"></div>
+
+<div class="w-full max-w-5xl mt-10 mx-auto">
+  <% if notice.present? %>
+    <p class="notice-aux py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Posts</h1>
+    <%= link_to "New post", new_post_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 mt-4">
+    <%= render @posts %>
+  </div>
+</div>
