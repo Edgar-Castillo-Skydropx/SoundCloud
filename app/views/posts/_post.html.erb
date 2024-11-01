@@ -1,18 +1,33 @@
 <div id="<%= dom_id post %>" class="bg-white shadow-lg rounded-lg p-6 mb-8 max-w-md mx-auto border border-gray-200">
   <h2 class="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2">Post Details</h2>
 
-  <div class="mb-5">
+  <div class="mb-5 h-12">
     <strong class="text-sm font-semibold text-gray-500 uppercase">Title:</strong>
     <p class="text-lg font-medium text-gray-700 mt-1"><%= post.title %></p>
   </div>
 
-  <div class="mb-5">
+  <div class="mb-5 h-16">
     <strong class="text-sm font-semibold text-gray-500 uppercase">Description:</strong>
     <p class="text-gray-600 mt-1 leading-relaxed"><%= post.description %></p>
   </div>
 
+  <%= image_tag(post.cover_art, class: "w-80 h-80 object-cover") if post.cover_art.attached? %>
+  <div data-controller="audio-player" data-audio-player-url-value="<%= url_for(post.audio) %>" class="max-w-2xl w-full mx-auto flex flex-col items-center">
+    <div data-audio-player-target="preview" class="w-full">
+    </div>
+    <%= link_to "#", data: { action: "audio-player#togglePlaying" } do %>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+      </svg>
+
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 hidden">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
+      </svg>
+    <% end %>
+  </div>
+
   <% if post.cover_art.attached? %>
-    <div class="mb-5">
+    <div class="mb-5 h-14">
       <strong class="text-sm font-semibold text-gray-500 uppercase">Cover Art:</strong>
       <p class="mt-1">
         <%= link_to post.cover_art.filename, post.cover_art, class: "text-blue-500 hover:underline text-lg" %>
@@ -21,11 +36,24 @@
   <% end %>
 
   <% if post.audio.attached? %>
-    <div class="mb-5">
+    <div class="mb-5 h-14">
       <strong class="text-sm font-semibold text-gray-500 uppercase">Audio:</strong>
       <p class="mt-1">
         <%= link_to post.audio.filename, post.audio, class: "text-blue-500 hover:underline text-lg" %>
       </p>
     </div>
   <% end %>
+
+  <% if current_page?(post_path(post)) %>
+    <div class="mb-5 h-14">
+      <p class="text-gray-600 mt-1 leading-relaxed"> <strong class="text-sm font-semibold text-gray-500 uppercase">Posted:</strong> <%= time_ago_in_words(post.created_at) %> ago</p>
+    </div>
+  <% end %>
+
+  <div class="mt-auto text-center">
+    <% unless current_page?(post_path(post)) %>
+      <%= link_to "View Details", post_path(post), class: "inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:shadow-lg transform transition-all duration-300 hover:-translate-y-1 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-700" %>
+    <% end %>
+  </div>
+
 </div>

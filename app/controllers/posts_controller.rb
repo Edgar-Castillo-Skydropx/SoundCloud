@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = current_user.posts.all
   end
 
   # GET /posts/1 or /posts/1.json
@@ -60,7 +60,14 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      unless current_user
+        redirect_to root_path and return
+      end
+
+      @post = current_user.posts.find_by(id: params[:id])
+      unless @post
+        redirect_to root_path and return
+      end
     end
 
     # Only allow a list of trusted parameters through.
