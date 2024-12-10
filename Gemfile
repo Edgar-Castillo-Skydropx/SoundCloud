@@ -63,3 +63,9 @@ end
 gem "devise", "~> 4.9"
 
 gem "tailwind_devise", "~> 0.0.3"
+
+## TAPIOCA AND SORBET LIBS
+
+gem 'sorbet', :group => :development
+gem 'sorbet-runtime'
+gem 'tapioca', require: false, :group => [:development, :test]
