@@ -1,9 +1,12 @@
+# typed: true
+
 class PostsController < ApplicationController
+  extend T::Sig
   before_action :set_post, only: %i[ show edit update destroy ]
 
   # GET /posts or /posts.json
   def index
-    @posts = current_user.posts.all
+    @posts = T.must(current_user).posts
   end
 
   # GET /posts/1 or /posts/1.json
@@ -11,6 +14,7 @@ class PostsController < ApplicationController
   end
 
   # GET /posts/new
+  sig { returns(Post) }
   def new
     @post = Post.new
   end
@@ -21,7 +25,7 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = current_user.posts.new(post_params)
+    @post = T.must(current_user).posts.new(post_params)
 
     respond_to do |format|
       if @post.save
@@ -64,7 +68,7 @@ class PostsController < ApplicationController
         redirect_to root_path and return
       end
 
-      @post = current_user.posts.find_by(id: params[:id])
+      @post = T.must(current_user).posts.find_by(id: params[:id])
       unless @post
         redirect_to root_path and return
       end
