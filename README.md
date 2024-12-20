@@ -31,3 +31,8 @@ Things you may want to cover:
 ## VALIDATE SORBET TYPES
 
 - srb tc
+
+## VIEW_COMPONENTS
+
+- bundle add view_component
+- rails g component header title

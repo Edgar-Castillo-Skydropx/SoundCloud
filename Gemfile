@@ -69,3 +69,4 @@ gem "tailwind_devise", "~> 0.0.3"
 gem 'sorbet', :group => :development
 gem 'sorbet-runtime'
 gem 'tapioca', require: false, :group => [:development, :test]
+gem "view_component", "~> 3.20"
